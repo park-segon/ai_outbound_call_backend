@@ -1,5 +1,10 @@
 import { Router } from "express";
-import { logoutUser, login } from "../controllers/user.controller.js";
+import {
+  logoutUser,
+  login,
+  createUser,
+  listUsers,
+} from "../controllers/user.controller.js";
 
 import verifyToken from "../middlewares/verifyToken.js";
 
@@ -21,7 +26,8 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 const router = Router();
-
+router.get("/", verifyToken, listUsers); // GET    /api/users
+router.post("/", verifyToken, createUser); // POST   /api/users
 router.post("/login", login);
 router.post("/logout", verifyToken, logoutUser);
 
